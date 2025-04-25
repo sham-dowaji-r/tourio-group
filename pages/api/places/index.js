@@ -1,6 +1,15 @@
-import { places } from "../../../lib/db";
+import dbConnect from "@/db/connect";
 
-export default function handler(request, response) {
+import Places from "@/db/models/Places";
+
+export default async function handler(request, response) {
+  await dbConnect();
+
+  if (request.method === "GET") {
+    const places = await Places.find();
+    response.status(200).json(places);
+    return;
+  }
+
   response.status(200).json(places);
-  return;
 }

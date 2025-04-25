@@ -1,15 +1,26 @@
+
 //el back end de POST
-import { places } from "../../../../lib/db.js";
+
+
+import dbConnect from "@/db/connect";
+import Places from "@/db/models/Places";
 
 export default async function handler(request, response) {
+  await dbConnect();
+
   const { id } = request.query;
 
-  const place = places.find((place) => place.id === id); //aca Busco el lugar con ese id enplaces. si esta lo asigno a la variable place.
+  if (request.method === "GET") {
+    const place = await Places.findById(id);
 
-  if (!place) {
-    response.status(404).json({ status: "Not found" });
+    if (!place) {
+      response.status(404).json({ status: "Not Found" });
+      return;
+    }
+    response.status(200).json(place);
     return;
   }
+
 
   response.status(200).json(place);
 
@@ -28,4 +39,5 @@ export default async function handler(request, response) {
     return;
   }
   response.status(405).json({ status: "Method Not Allowed" });
+
 }
