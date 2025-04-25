@@ -1,15 +1,14 @@
+
 //el frntend de POST
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Form from "../components/Form";
 import { StyledLink } from "../components/StyledLink";
 
-const StyledBackLink = styled(StyledLink)`
-  justify-self: flex-start;
-`;
 
-export default function CreatePlacePage() {
+export default function CreatePage() {
   const router = useRouter();
+
   async function addPlace(place) {
     const response = await fetch(`/api/places`, {
       method: "POST", //  crear un nuevo producto
@@ -27,9 +26,8 @@ export default function CreatePlacePage() {
 
   return (
     <>
-      <h2 id="add-place">Add Place</h2>
-      <StyledBackLink href="/">back</StyledBackLink>
-      <Form onSubmit={addPlace} formName={"add-place"} />
+      <h2>Create a New Place</h2>
+      <Form onSubmit={addPlace} formName="create-place" />
     </>
   );
 }

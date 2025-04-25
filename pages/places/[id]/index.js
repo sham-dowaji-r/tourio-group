@@ -31,25 +31,29 @@ const StyledLocationLink = styled(StyledLink)`
   border: none;
 `;
 
-export default async function DetailsPage() {
+export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
 
-  const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
+  const {
+    data: place,
+    isLoading,
+    error,
+  } = useSWR(id ? `/api/places/${id}` : null);
 
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
   async function deletePlace() {
-    console.log("Deleting place ...");
+    const response = await fetch(`/api/places/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      router.push("/");
+    }
   }
 
-  if (request.method === "PUT") {
-    const updatedPlace = request.body;
-    await Place.findByIdAndUpdate(id, updatedPlace);
-    response.status(200).json({ status: "Place update" });
-    return;
-  }
+  console.log(place);
 
   return (
     <>
@@ -70,9 +74,11 @@ export default async function DetailsPage() {
       <h2>
         {place.name}, {place.location}
       </h2>
-      <StyledLocationLink href={place.mapURL}>
-        Location on Google Maps
-      </StyledLocationLink>
+      {place.mapURL && (
+        <StyledLocationLink href={place.mapURL}>
+          Location on Google Maps
+        </StyledLocationLink>
+      )}
       <p>{place.description}</p>
       <ButtonContainer>
         <StyledLink href={`/places/${id}/edit`}>Edit</StyledLink>
