@@ -1,24 +1,25 @@
-import styled from "styled-components";
-import { useRouter } from "next/router";
-import Form from "../components/Form";
-import { StyledLink } from "../components/StyledLink";
-import useSWR from "swr";
+import { useRouter } from "next/navigation";
+import Form from "@/components/Form";
 
-const StyledBackLink = styled(StyledLink)`
-  justify-self: flex-start;
-`;
-
-export default function CreatePlacePage() {
+export default function CreatePage() {
   const router = useRouter();
-  async function addPlace(place) {
-    console.log("adding place");
+
+  async function addPlace(data) {
+    const response = await fetch("/api/places", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      router.push("/");
+    }
   }
 
   return (
     <>
-      <h2 id="add-place">Add Place</h2>
-      <StyledBackLink href="/">back</StyledBackLink>
-      <Form onSubmit={addPlace} formName={"add-place"} />
+      <h2>Create a New Place</h2>
+      <Form onSubmit={addPlace} formName="create-place" />
     </>
   );
 }

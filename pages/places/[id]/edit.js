@@ -9,8 +9,26 @@ export default function EditPage() {
   const { id } = router.query;
   const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
 
-  async function editPlace(place) {
-    console.log("Editing place ...");
+  async function editPlace(event) {
+    event.preventDefault();
+    if (!id) return;
+    const form = event.target;
+    const formData = new FormData(form);
+    const updatedPlace = Object.fromEntries(formData);
+
+    console.log(updatedPlace);
+
+    const response = await fetch(`/api/places/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedPlace),
+    });
+
+    if (response.ok) {
+      router.push("/"); // رجعه للصفحة الرئيسية بعد الحفظ
+    }
   }
 
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
