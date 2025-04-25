@@ -33,7 +33,7 @@ const StyledLocationLink = styled(StyledLink)`
 export default function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
-  const { id } = routerquery;
+  const { id } = router.query;
 
   const {
     data: place,
