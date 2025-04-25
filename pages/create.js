@@ -1,4 +1,3 @@
-//el frntend de POST
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Form from "../components/Form";
@@ -10,11 +9,11 @@ export default function CreatePage() {
   async function addPlace(place) {
     console.log("Submitting place:", place);
     const response = await fetch(`/api/places`, {
-      method: "POST", //  crear un nuevo producto
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(place), // convierte el objeto a JSON
+      body: JSON.stringify(place),
     });
     if (response.ok) {
       router.push("/");

@@ -8,10 +8,10 @@ export default async function handler(req, res) {
     try {
       const places = await Places.find();
       res.status(200).json(places);
-      return; // <-- ضروري
+      return;
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch places" });
-      return; // <-- ضروري
+      return;
     }
   } else if (req.method === "POST") {
     const placeData = req.body;
@@ -19,13 +19,12 @@ export default async function handler(req, res) {
     try {
       await Places.create(placeData);
       res.status(201).json({ status: "Place created.", place: placeData });
-      return; // <-- ضروري
+      return;
     } catch (error) {
       res.status(500).json({ status: "Error creating place." });
-      return; // <-- ضروري
+      return;
     }
   }
 
-  // هذا ما يتنفّذ إلا لو ما كان GET ولا POST
   res.status(405).json({ status: "Method Not Allowed" });
 }
