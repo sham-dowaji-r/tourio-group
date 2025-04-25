@@ -9,14 +9,8 @@ export default function EditPage() {
   const { id } = router.query;
   const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
 
-  async function editPlace(event) {
-    event.preventDefault();
+  async function editPlace(updatedPlace) {
     if (!id) return;
-    const form = event.target;
-    const formData = new FormData(form);
-    const updatedPlace = Object.fromEntries(formData);
-
-    console.log(updatedPlace);
 
     const response = await fetch(`/api/places/${id}`, {
       method: "PUT",
