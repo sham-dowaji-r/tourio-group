@@ -30,7 +30,7 @@ const StyledLocationLink = styled(StyledLink)`
   border: none;
 `;
 
-export default function DetailsPage() {
+export default async function DetailsPage() {
   const router = useRouter();
   const { isReady } = router;
   const { id } = router.query;
@@ -41,6 +41,13 @@ export default function DetailsPage() {
 
   async function deletePlace() {
     console.log("Deleting place ...");
+  }
+
+  if (request.method === "PUT") {
+    const updatedPlace = request.body;
+    await Place.findByIdAndUpdate(id, updatedPlace);
+    response.status(200).json({ status: "Place update" });
+    return;
   }
 
   return (
