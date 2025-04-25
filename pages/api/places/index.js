@@ -1,12 +1,15 @@
 import dbConnect from "@/db/connect";
 
+import Places from "@/db/models/Places";
+
 export default async function handler(request, response) {
   await dbConnect();
 
   if (request.method === "GET") {
-    const places = await Place.find();
+    const places = await Places.find();
     response.status(200).json(places);
     return;
   }
-  res.status(405).json({ status: "Not allowed" });
+
+  response.status(200).json(places);
 }
