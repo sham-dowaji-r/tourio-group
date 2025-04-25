@@ -1,3 +1,4 @@
+//detalles de un lugar en el frontend, con SWR traes los datos de un lugar desde el backend con una solicitud GET.
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import styled from "styled-components";

@@ -1,4 +1,7 @@
-// import { places } from "../../../../lib/db.js";
+
+//el back end de POST
+
+
 import dbConnect from "@/db/connect";
 import Places from "@/db/models/Places";
 
@@ -25,3 +28,6 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "Method not allowed" });
   }
 }
+
+
+
