@@ -8,22 +8,24 @@ export default async function handler(req, res) {
     try {
       const places = await Places.find();
       res.status(200).json(places);
+      return; // <-- ضروري
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch places" });
+      return; // <-- ضروري
     }
-  } else if (request.method === "POST") {
-    // creo el lugar usando los datos enviados en el cuerpo de la solicitud
-    const placeData = request.body;
+  } else if (req.method === "POST") {
+    const placeData = req.body;
 
     try {
-      //se crea un lnuevo lugar
-      await place.create(placeData);
-
-      response.status(201).json({ status: "Place created.", place: placeData });
+      await Places.create(placeData);
+      res.status(201).json({ status: "Place created.", place: placeData });
+      return; // <-- ضروري
     } catch (error) {
-      response.status(500).json({ status: "Error creating place." });
+      res.status(500).json({ status: "Error creating place." });
+      return; // <-- ضروري
     }
-    return;
   }
-  response.status(405).json({ status: "Method Not Allowed" });
+
+  // هذا ما يتنفّذ إلا لو ما كان GET ولا POST
+  res.status(405).json({ status: "Method Not Allowed" });
 }
