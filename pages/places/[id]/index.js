@@ -81,7 +81,7 @@ export default function DetailsPage() {
       )}
       <p>{place.description}</p>
       <ButtonContainer>
-        <StyledLink href={`/places/${id}/edit`}>Edit</StyledLink>
+        {id && <StyledLink href={`/places/${id}/edit`}>Edit</StyledLink>}
         <StyledButton onClick={deletePlace} type="button" $variant="delete">
           Delete
         </StyledButton>
