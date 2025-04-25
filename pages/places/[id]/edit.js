@@ -21,7 +21,7 @@ export default function EditPage() {
     });
 
     if (response.ok) {
-      router.push("/"); // رجعه للصفحة الرئيسية بعد الحفظ
+      router.push("/");
     }
   }
 
